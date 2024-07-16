@@ -24,7 +24,7 @@ $sql = mysqli_query(
     "SELECT SQL_CALC_FOUND_ROWS * FROM products
     LEFT JOIN categories ON product_category_id = category_id
     LEFT JOIN taxes ON product_tax_id = tax_id
-    WHERE (product_name LIKE '%$q%' OR product_description LIKE '%$q%' OR category_name LIKE '%$q%' OR product_price LIKE '%$q%' OR tax_name LIKE '%$q%' OR tax_percent LIKE '%$q%')
+    WHERE (product_name LIKE '%$q%' OR product_description LIKE '%$q%' OR product_location LIKE '%$q%' OR product_code LIKE '%$q%' OR category_name LIKE '%$q%' OR product_price LIKE '%$q%' OR tax_name LIKE '%$q%' OR tax_percent LIKE '%$q%')
     AND product_$archive_query
     $category_query
     
@@ -136,6 +136,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli, "SELECT FOUND_ROWS()"));
                             <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=product_name&order=<?php echo $disp; ?>">Name</a></th>
                             <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=category_name&order=<?php echo $disp; ?>">Category</a></th>
                             <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=product_description&order=<?php echo $disp; ?>">Description</a></th>
+                            <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=product_location&order=<?php echo $disp; ?>">Location</a></th>
+                            <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=product_code&order=<?php echo $disp; ?>">Code</a></th>
                             <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=tax_name&order=<?php echo $disp; ?>">Tax Name</a></th>
                             <th><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=tax_percent&order=<?php echo $disp; ?>">Tax Rate</a></th>
                             <th class="text-right"><a class="text-dark" href="?<?php echo $url_query_strings_sort; ?>&sort=product_price&order=<?php echo $disp; ?>">Price</a></th>
@@ -154,6 +156,18 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli, "SELECT FOUND_ROWS()"));
                                 $product_description_display = "-";
                             } else {
                                 $product_description_display = "<div style='white-space:pre-line'>$product_description</div>";
+                            }
+                            $product_location = nullable_htmlentities($row['product_location']);
+                            if (empty($product_location)) {
+                                $product_location_display = "-";
+                            } else {
+                                $product_location_display = "<div style='white-space:pre-line'>$product_location</div>";
+                            }
+                            $product_code = nullable_htmlentities($row['product_code']);
+                            if (empty($product_code)) {
+                                $product_code_display = "-";
+                            } else {
+                                $product_code_display = "<div style='white-space:pre-line'>$product_code</div>";
                             }
                             $product_price = floatval($row['product_price']);
                             $product_currency_code = nullable_htmlentities($row['product_currency_code']);
@@ -181,6 +195,8 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli, "SELECT FOUND_ROWS()"));
                                 <th><a class="text-dark" href="#" data-toggle="modal" data-target="#editProductModal<?php echo $product_id; ?>"><?php echo $product_name; ?></a></th>
                                 <td><?php echo $category_name; ?></td>
                                 <td><?php echo $product_description_display; ?></td>
+                                <td><?php echo $product_location_display; ?></td>
+                                <td><?php echo $product_code_display; ?></td>
                                 <td><?php echo $tax_name_display; ?></td>
                                 <td><?php echo $tax_percent; ?>%</td>
                                 <td class="text-right"><?php echo numfmt_format_currency($currency_format, $product_price, $product_currency_code); ?></td>

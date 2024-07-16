@@ -10,7 +10,7 @@ if (isset($_POST['add_product'])) {
     require_once 'post/product_model.php';
 
 
-    mysqli_query($mysqli,"INSERT INTO products SET product_name = '$name', product_description = '$description', product_price = '$price', product_currency_code = '$session_company_currency', product_tax_id = $tax, product_category_id = $category");
+    mysqli_query($mysqli,"INSERT INTO products SET product_name = '$name', product_description = '$description', product_price = '$price', product_location = '$location', product_code = '$code', product_currency_code = '$session_company_currency', product_tax_id = $tax, product_category_id = $category");
 
     //logging
     mysqli_query($mysqli,"INSERT INTO logs SET log_type = 'Product', log_action = 'Create', log_description = '$session_name created product $name', log_ip = '$session_ip', log_user_agent = '$session_user_agent', log_user_id = $session_user_id");
@@ -28,7 +28,7 @@ if (isset($_POST['edit_product'])) {
 
     $product_id = intval($_POST['product_id']);
 
-    mysqli_query($mysqli,"UPDATE products SET product_name = '$name', product_description = '$description', product_price = '$price', product_tax_id = $tax, product_category_id = $category WHERE product_id = $product_id");
+    mysqli_query($mysqli,"UPDATE products SET product_name = '$name', product_description = '$description', product_price = '$price', product_location = '$location', product_code = '$code', product_tax_id = $tax, product_category_id = $category WHERE product_id = $product_id");
 
     //Logging
     mysqli_query($mysqli,"INSERT INTO logs SET log_type = 'Product', log_action = 'Modify', log_description = '$name', log_user_id = $session_user_id");
@@ -272,12 +272,12 @@ if (isset($_POST['export_products_csv'])) {
         $f = fopen('php://memory', 'w');
 
         //set column headers
-        $fields = array('Product', 'Description', 'Price', 'Currency', 'Category', 'Tax');
+        $fields = array('Product', 'Description', 'Price', 'Currency', 'Category', 'Tax', 'Location', 'Code');
         fputcsv($f, $fields, $delimiter);
 
         //output each row of the data, format line as csv and write to file pointer
         while($row = mysqli_fetch_assoc($sql)) {
-            $lineData = array($row['product_name'], $row['product_description'], $row['product_price'], $row['product_currency_code'], $row['category_name'], $row['tax_name']);
+            $lineData = array($row['product_name'], $row['product_description'], $row['product_price'], $row['product_currency_code'], $row['category_name'], $row['tax_name'], $row['product_location'], $row['product_code']);
             fputcsv($f, $lineData, $delimiter);
         }
 

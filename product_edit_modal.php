@@ -86,6 +86,31 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-fw fa-map-marker-alt"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="location" placeholder="Product location" value="<?php echo $product_location; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Code</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-fw fa-barcode"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="code" placeholder="Product code" value="<?php echo $product_code; ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label>Description</label>
