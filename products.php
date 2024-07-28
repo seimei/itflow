@@ -210,6 +210,9 @@ $num_rows = mysqli_fetch_row(mysqli_query($mysqli, "SELECT FOUND_ROWS()"));
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProductModal<?php echo $product_id; ?>">
                                                 <i class="fas fa-fw fa-edit mr-2"></i>Edit
                                             </a>
+                                            <a class="dropdown-item" href="post.php?print_label=<?php echo $product_id; ?>">
+                                                <i class="fas fa-print mr-2"></i>Print
+                                            </a>
                                             <?php if ($session_user_role == 3) { ?>
                                                 <?php if ($product_archived_at) { ?>
                                                 <div class="dropdown-divider"></div>

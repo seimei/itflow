@@ -42,6 +42,16 @@ if (isset($_POST['edit_product'])) {
 
 }
 
+if (isset($_GET['print_label'])) {
+
+    require_once 'post/product_model.php';
+
+
+    $product_id = intval($_GET['print_label']);
+    header("Location: product_label.php?product_id=$product_id");
+    
+}
+
 if (isset($_GET['archive_product'])) {
 
     validateTechRole();
